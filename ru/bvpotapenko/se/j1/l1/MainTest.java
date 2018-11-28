@@ -1,3 +1,5 @@
+package ru.bvpotapenko.se.j1.l1;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

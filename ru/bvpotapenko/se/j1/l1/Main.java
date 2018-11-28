@@ -1,3 +1,5 @@
+package ru.bvpotapenko.se.j1.l1;
+
 public class Main {
 
     //Task 1: Создать пустой проект в IntelliJ IDEA и прописать метод main();
