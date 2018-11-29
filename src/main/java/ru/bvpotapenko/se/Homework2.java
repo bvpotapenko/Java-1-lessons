@@ -30,6 +30,9 @@ public class Homework2 {
         findBalanceInArray(new int[]{4, 1, 1, 1, 1});
         findBalanceInArray(new int[]{0, 0, 0, 0, 0, 0, 1, 0, 1});
         findBalanceInArray(new int[]{});
+
+        //Задача 7. Сдвинуть массив на N позиций
+        System.out.println(shiftArray(new ArrayList<Object>(Arrays.asList(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})), 3));
     }
 
     //Читаем с консоли размер будущего массива
@@ -136,4 +139,30 @@ public class Homework2 {
         sb.append("}");
         return sb.toString();
     }
+
+    //Позитивный сдвиг
+    public static List<Object> shiftArray (ArrayList<Object> arr, int shift){
+        if (arr.isEmpty() || shift == 0) return arr;
+        System.out.println(arr.toString());
+        for (int i = 0; i < shift; i++) {
+            arr = putItemInArray(
+                    putItemInArray(
+                            arr,
+                            arr.get(arr.size()-2),
+                            arr.size()-1),
+                    arr.get(arr.size()-1),
+                    0);
+        }
+        System.out.println(arr.toString());
+        return arr;
+    }
+ //   метод: положить в ячейку массива значение, вернуть массив. но перед складыванием рекурсивно перекинуть предыдущий
+     private static ArrayList<Object> putItemInArray(ArrayList<Object> arr, Object item, int position){
+        if (position -1 > 0){
+            arr.set(position, item);
+            putItemInArray(arr, arr.get(position-2), position-1);
+        }
+        return arr;
+     }
+
 }
