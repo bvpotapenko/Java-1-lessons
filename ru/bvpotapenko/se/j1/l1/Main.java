@@ -92,13 +92,13 @@ public class Main {
     //високосный.
     public static void task8_isLeapYear(int year) {
         //год положительный; 
-		// делится на 4, но не делится на 100; 
-		// делится на 400.
-		final boolean check1 = year > 0; 	
-		final boolean check2 = year % 4 == 0 && year % 100 != 0;
-		final boolean check3 = year % 400 == 0;
-		final boolean check4 = check1 && check2 || check1 && check3;
-		String answer = check4 ? year + " - является високосным" :  (year + " - не високосный");
-        System.out.println (answer);
+        // делится на 4, но не делится на 100;
+        // делится на 400.
+        final boolean check1 = year > 0;
+        final boolean check2 = year % 4 == 0 && year % 100 != 0;
+        final boolean check3 = year % 400 == 0;
+        final boolean check4 = check1 && check2 || check1 && check3;
+        String answer = check4 ? year + " - является високосным" : (year + " - не високосный");
+        System.out.println(answer);
     }
 }
