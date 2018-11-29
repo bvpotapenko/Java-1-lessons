@@ -91,13 +91,14 @@ public class Main {
     //консоль. Каждый 4-й год является високосным, кроме каждого 100-го, при этом каждый 400-й –
     //високосный.
     public static void task8_isLeapYear(int year) {
-        if (year > 0 && //год больше нуля и делится на 4, но не делится на 100; или год положительный и делится на 400.
-                ((year % 4 == 0 && year % 100 != 0) ||
-                        (year % 400 == 0))
-        ) {
-            System.out.println(year + " - является високосным");
-        } else
-            System.out.println(year + " - не високосный");
-
+        //год положительный; 
+		// делится на 4, но не делится на 100; 
+		// делится на 400.
+		final boolean check1 = year > 0; 	
+		final boolean check2 = year % 4 == 0 && year % 100 != 0;
+		final boolean check3 = year % 400 == 0;
+		final boolean check4 = check1 && check2 || check1 && check3;
+		String answer = check4 ? year + " - является високосным" :  (year + " - не високосный");
+        System.out.println (answer);
     }
 }
