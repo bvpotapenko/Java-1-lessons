@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit test for simple App.
+ * Unit test for simple NoughtsAndCrosses.
  */
-public class AppTest 
+public class NoughtsAndCrossesTest
 {
     /**
      * Rigorous Test :-)
