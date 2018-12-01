@@ -50,27 +50,27 @@ public class BotLogic {
 
     //todo
     private boolean getWinLIne(){
-
+        return false;
     }
 
     //todo
     private boolean getLooseLine(){
-
+        return false;
     }
 
     //todo
     private boolean get2DotLine(){
-
+        return false;
     }
 
     //todo
     private boolean get1DotLine(){
-
+        return false;
     }
 
     //todo
     private boolean getEmptyLine(){
-
+        return false;
     }
 
     //todo
