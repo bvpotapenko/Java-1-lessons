@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserService {
 
-    boolean register (String login, String passwoerd);
+    boolean register (String login, String password);
 
     boolean isLoginExist(String login);
 
@@ -14,6 +14,8 @@ public interface UserService {
 
     List<String> getListLogin();
 
-    User getUseer(String login);
+    User getUser(String login);
+
+    int getCountUser();
 
 }

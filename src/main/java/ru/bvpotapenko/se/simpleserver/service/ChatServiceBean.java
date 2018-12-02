@@ -36,7 +36,7 @@ public class ChatServiceBean implements ChatService {
 
     @Override
     @WebMethod
-    public Session seignIn(final String login, final String password) {
+    public Session signIn(final String login, final String password) {
         return sessionService.signIn(login, password);
     }
 
@@ -56,27 +56,28 @@ public class ChatServiceBean implements ChatService {
     @WebMethod
     public List<Message> getMessages(final Session session) {
         final User user = sessionService.getUser(session);
-        return messageService.getMessage(user.login);
+        return messageService.getMessage(user.getLogin());
     }
 
     @Override
     @WebMethod
-    public boolean sendBroadCast(final Session session, final String text) {
+    public void sendBroadCast(final Session session, final String text) {
         User user = sessionService.getUser(session);
-        return messageService.sendBroadCast(user.login, text);
+        messageService.sendBroadCast(user.getLogin(), text);
     }
 
     @Override
     @WebMethod
     public boolean sendMessage(final Session session, final String target, final String text) {
-        User sourceUseer = sessionService.getUser(session); //TODO: This method was done another way in example
-        return messageService.sendMessage(sourceUseer.login, target, text);
+        User sourceUser = sessionService.getUser(session);
+        User targetUser = sessionService.getUser(session); //Do it to "check" our user.
+        return messageService.sendMessage(sourceUser.getLogin(), targetUser.getLogin(), text);
     }
 
     @Override
     @WebMethod
     public boolean cleanMessage(final Session session) {
         User user = sessionService.getUser(session);
-        return messageService.cleanMessage(user.login);
+        return messageService.cleanMessage(user.getLogin());
     }
 }

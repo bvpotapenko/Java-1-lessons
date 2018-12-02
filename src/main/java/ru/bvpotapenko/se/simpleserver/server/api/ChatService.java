@@ -21,7 +21,7 @@ public interface ChatService {
     boolean isLoginExists(@WebParam String login);
 
     @WebMethod
-    Session seignIn (@WebParam String login, @WebParam String password);
+    Session signIn (@WebParam String login, @WebParam String password);
 
     @WebMethod
     User getUser (@WebParam Session session);
@@ -33,7 +33,7 @@ public interface ChatService {
     List<Message> getMessages (@WebParam Session session);
 
     @WebMethod
-    boolean sendBroadCast(Session session, String text);
+    void sendBroadCast(Session session, String text);
 
     @WebMethod
     boolean sendMessage(Session session, String target, String text);

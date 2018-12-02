@@ -8,7 +8,7 @@ public interface MessageService {
 
     List<Message> getMessage(String login);
 
-    boolean sendBroadCast(String source, String text);
+    void sendBroadCast(String source, String text);
 
     boolean sendMessage(String source, String target, String text);
 

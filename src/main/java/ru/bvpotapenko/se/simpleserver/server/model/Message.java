@@ -13,4 +13,14 @@ public class Message {
     public String target;
 
     public String text;
+
+    public Message(String source, String target, String text) {
+        this.source = source;
+        this.target = target;
+        this.text = text;
+    }
+
+    public Message(){
+
+    }
 }
