@@ -13,4 +13,5 @@ public class ChatServer {
         service.register("user-2", "user-2");
         Endpoint.publish("http://locahost:8080/ChatService?wsdl", service);
     }
+
 }

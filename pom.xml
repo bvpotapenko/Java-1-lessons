@@ -53,7 +53,7 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
-                <mainClass>ru.bvpotapenko.se.simple-server.App</mainClass>
+                <mainClass>ru.bvpotapenko.se.simpleserver.App</mainClass>
               </manifest>
             </archive>
           </configuration>

@@ -44,7 +44,7 @@ public class MessageServiceBean implements MessageService {
         for (String target: userService.getListLogin()) {
             if (source.equals(target)) continue;
             sendMessage(source, target, text);
-        }        
+        }
     }
 
     //TODO: Check the message for any illegal characters.
@@ -57,7 +57,7 @@ public class MessageServiceBean implements MessageService {
         final User targetUser = userService.getUser(target);
         if (sourceUser == null || targetUser == null) return false;
         final Message message = new Message(sourceUser.getLogin(), targetUser.getLogin(), text);
-        final MessageBox messageBox = boxes.get(targetUser.getLogin());
+        final MessageBox messageBox = getMessageBox(targetUser.getLogin());
         messageBox.add(message);
         return true;
     }

@@ -33,11 +33,12 @@ public interface ChatService {
     List<Message> getMessages (@WebParam Session session);
 
     @WebMethod
-    void sendBroadCast(Session session, String text);
+    void sendBroadCast(@WebParam Session session, @WebParam String text);
 
     @WebMethod
-    boolean sendMessage(Session session, String target, String text);
+    boolean sendMessage(@WebParam Session session, @WebParam String target, @WebParam String text);
 
     @WebMethod
-    boolean cleanMessage(Session session);
+    boolean cleanMessage(@WebParam Session session);
+
 }

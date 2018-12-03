@@ -1,13 +1,16 @@
 package ru.bvpotapenko.se.simpleserver.service;
 
-import ru.bvpotapenko.se.simpleserver.server.api.*;
+import ru.bvpotapenko.se.simpleserver.server.api.ChatService;
+import ru.bvpotapenko.se.simpleserver.server.api.MessageService;
+import ru.bvpotapenko.se.simpleserver.server.api.SessionService;
+import ru.bvpotapenko.se.simpleserver.server.api.UserService;
 import ru.bvpotapenko.se.simpleserver.server.model.*;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import java.util.List;
 
-@WebService(endpointInterface = "ru.bvpotapenko.se.simpleserver.api.ChatService")
+@WebService(endpointInterface = "ru.bvpotapenko.se.simpleserver.server.api.ChatService")
 public class ChatServiceBean implements ChatService {
 
     private final UserService userService = new UserServiceBean();
@@ -69,8 +72,10 @@ public class ChatServiceBean implements ChatService {
     @Override
     @WebMethod
     public boolean sendMessage(final Session session, final String target, final String text) {
+        if(session == null || target == null || target == "") return false;
         User sourceUser = sessionService.getUser(session);
-        User targetUser = sessionService.getUser(session); //Do it to "check" our user.
+        User targetUser = userService.getUser(target); //Do it to "check" our user.
+        if (sourceUser == null || targetUser == null) return false;
         return messageService.sendMessage(sourceUser.getLogin(), targetUser.getLogin(), text);
     }
 
@@ -80,4 +85,9 @@ public class ChatServiceBean implements ChatService {
         User user = sessionService.getUser(session);
         return messageService.cleanMessage(user.getLogin());
     }
+
+    public ChatServiceBean(){
+
+    }
+
 }
