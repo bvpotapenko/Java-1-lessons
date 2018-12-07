@@ -4,11 +4,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>ru.bvpotapenko.se.simpleserver</groupId>
-  <artifactId>SimpleServer</artifactId>
+  <groupId>ru.bvpotapenko.se</groupId>
+  <artifactId>simplechat</artifactId>
   <version>1.0.0</version>
 
-  <name>SimpleServer</name>
+  <name>simplechat</name>
+  <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
   <properties>
@@ -53,7 +54,7 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
-                <mainClass>ru.bvpotapenko.se.simpleserver.App</mainClass>
+                <mainClass>ru.bvpotapenko.se.simplechat.App</mainClass>
               </manifest>
             </archive>
           </configuration>
