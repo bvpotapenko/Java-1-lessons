@@ -95,14 +95,6 @@ public class Main {
         task17_checkDoubleInBounds(0.5d, 0.99d);
     }
 
-    private static void task17_checkDoubleInBounds(double x, double y) {
-        System.out.println( Double.compare(x, 0.0d) == 1 &&
-                            Double.compare(x, 1.0d) == -1 &&
-                        Double.compare(y, 0.0d) == 1 &&
-                        Double.compare(y, 1.0d) == -1);
-    }
-
-
     //Task 3: Написать метод вычисляющий выражение a * (b + (c / d)) и возвращающий результат,
     //где a, b, c, d – входные параметры этого метода;
     public static float task3_solveExpression(int a, int b, int c, int d) {
@@ -189,5 +181,12 @@ public class Main {
     private static void task16_compareThreeNumbers(int a, int b, int c) {
         boolean check = a == b && b == c;
         System.out.println(check ? "Все три числа равны" : "не равны");
+    }
+
+    private static void task17_checkDoubleInBounds(double x, double y) {
+        System.out.println( Double.compare(x, 0.0d) == 1 &&
+                Double.compare(x, 1.0d) == -1 &&
+                Double.compare(y, 0.0d) == 1 &&
+                Double.compare(y, 1.0d) == -1);
     }
 }
