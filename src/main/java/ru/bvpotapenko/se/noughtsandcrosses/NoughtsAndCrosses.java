@@ -1,18 +1,24 @@
 package ru.bvpotapenko.se.noughtsandcrosses;
 
-import java.util.Random;
+import java.text.MessageFormat;
 import java.util.Scanner;
 
 /**
- * Hello world!
+ * Noughts And Crosses game.
  */
 public class NoughtsAndCrosses {
     private static Scanner sc = new Scanner(System.in);
-    private static Random random = new Random();
+    private static BotLogic botLogic;
     private static char[][] map;
     private static int mapWidth = 3;
     private static int mapHeight = 3;
-    private static final char DOT_EMPTY = '■';
+    private static int dotsToWin = 3;
+    private static int minDotsToWin = 3;
+    private static int maxMapWidth = 99;
+    private static int minMapWidth = 3;
+    private static int maxMapHeight = 99;
+    private static int minMapHeight = 3;
+    private static final char DOT_EMPTY = ' ';//'■';
     private static final char DOT_PLAYER = 'X';
     private static final char DOT_BOT = 'O';
     private static final String DRAW_GAME_MESSAGE = "Ничья!";
@@ -35,6 +41,7 @@ public class NoughtsAndCrosses {
             "    |_|_|\n" +
             "    /_|_\\";
 
+
     static void initMap() {
         map = new char[mapWidth][mapHeight];
         for (int i = 0; i < mapWidth; i++) {
@@ -45,17 +52,35 @@ public class NoughtsAndCrosses {
     }
 
     static void printMap() {
-        for (int k = 0; k < mapWidth + 1; k++) {
-            System.out.printf(" %2d", k);
+        StringBuilder sb = new StringBuilder();
+        sb = new StringBuilder();
+        sb.append("+----");
+        for (int k = 0; k < mapWidth; k++) {
+            sb.append("+---");
         }
-        System.out.println();
-        for (int i = 0; i < mapWidth; i++) {
-            System.out.printf(" %2d", i + 1);
-            for (int j = 0; j < mapHeight; j++) {
-                System.out.printf(" %2c", map[i][j]);
+        sb.append("+%n");
+        String rowSeparator = sb.toString();
+        System.out.printf(rowSeparator);
+        System.out.print("|    |");
+        for (int k = 1; k < mapWidth + 1; k++) {
+            System.out.print(MessageFormat.format(" {0} |", k));
+        }
+        System.out.println(" (X-axis)");
+        System.out.printf(rowSeparator);
+        for (int i = 0; i < mapHeight; i++) {
+            //System.out.print(MessageFormat.format("| {0} ", i + 1));
+            System.out.printf("| %2d ", i + 1);
+            for (int j = 0; j < mapWidth; j++) {
+                if (j == mapWidth - 1) {
+                    System.out.print(MessageFormat.format("| {0} |", map[j][i]));
+                } else {
+                    System.out.print(MessageFormat.format("| {0} ", map[j][i]));
+                }
             }
             System.out.println();
+            System.out.printf(rowSeparator);
         }
+        System.out.println("(Y-axis)");
     }
 
     private static void playerTurn() {
@@ -65,25 +90,26 @@ public class NoughtsAndCrosses {
             System.out.println(INPUT_COORDINATES_MESSAGE);
             x = sc.nextInt() - 1;
             y = sc.nextInt() - 1;
+            sc.nextLine();
         } while (!isCellEmpty(x, y));
         map[x][y] = DOT_PLAYER;
 
     }
 
     private static boolean isCellEmpty(int x, int y) {
-        if (x < 0 || y < 0 || x > mapWidth - 1 || y > mapHeight - 1)
+        if (x < 0 || y < 0 || x > map.length - 1 || y > map[0].length - 1)
             return false;
         return map[x][y] == DOT_EMPTY;
     }
 
     private static void aiTurn() {
         int x, y;
-        do {
-            x = random.nextInt(3);
-            y = random.nextInt(3);
-        } while (!isCellEmpty(x, y));
+        botLogic.updateMap(map);
+        botLogic.processNextStep();
+        x = botLogic.getX();
+        y = botLogic.getY();
         map[x][y] = DOT_BOT;
-        System.out.println(ROBOT_PLAYED_MESSAGE + x + " " + y);
+        System.out.println(ROBOT_PLAYED_MESSAGE + (x + 1) + " " + (y + 1));
 
     }
 
@@ -97,79 +123,83 @@ public class NoughtsAndCrosses {
         return true;
     }
 
-    private static boolean checkWin(char dot) {
-        if (map[0][0] == dot && map[0][1] == dot && map[0][2] == dot)
-            return true;
-        if (map[1][0] == dot && map[1][1] == dot && map[1][2] == dot)
-            return true;
-        if (map[2][0] == dot && map[2][1] == dot && map[2][2] == dot)
-            return true;
-
-        if (map[0][0] == dot && map[1][0] == dot && map[2][0] == dot)
-            return true;
-        if (map[0][1] == dot && map[1][1] == dot && map[2][1] == dot)
-            return true;
-        if (map[0][2] == dot && map[1][2] == dot && map[2][2] == dot)
-            return true;
-
-        if (map[0][0] == dot && map[1][1] == dot && map[2][2] == dot)
-            return true;
-        if (map[0][2] == dot && map[1][1] == dot && map[2][0] == dot)
-            return true;
-        return false;
-    }
-
-    private static int[][] aiLogic() {
-        //TODO:
-        //Проверка угрозы поражения
-        //проверить линии на наличие двух "Х"
-        //Поставить "О" в свободную ячейку этой линии.
-
-        //Проверяем построчно, победу:
-        //Найти строку/столбец/диагональ с 2х "О" .. 1х "О"
-        //Если такой линии нет, то найти строку без "Х"
-        //Найти в строке свободный символ.
-        //Поставить "О" в найденную позицию.
-
-
-        //Усиление логики
-        //1. Ставить в центр, если он свободен
-        //2. Ставя "О" в пустую линию или линию с 1х "Х", выбирать ячейку рядом с "Х".
-        //3. Искать выгодные пересечения строк, в которых есть "О"
-        return null;
-
-    }
-
 
     public static void main(String[] args) {
-        initMap();
-        printMap();
+        boolean playAgain = true;
+        while (playAgain) {
+            boolean isFieldSet = false;
+            while (!isFieldSet) {
+                System.out.println("Field size is set to 3x3.\n" +
+                        "Set another field size? y/n");
+                String command = sc.nextLine();
+                if (command.equalsIgnoreCase("y")) {
+                    System.out.println("Input width. Must be >= 3 AND <= " + maxMapWidth);
+                    mapWidth = sc.nextInt();
+                    System.out.println("Input height. Must be >= 3 AND <= " + maxMapHeight);
+                    mapHeight = sc.nextInt();
+                    sc.nextLine();
+                }
+                if (mapWidth >= minMapWidth && mapWidth <= maxMapWidth && mapHeight >= minMapHeight && mapHeight <= maxMapHeight) {
+                    isFieldSet = true;
+                } else {
+                    mapWidth = 3;
+                    mapHeight = 3;
+                    System.out.println("Wrong field size.");
+                }
+            }
+            boolean isWinAmountSet = false;
+            while (!isWinAmountSet) {
+                System.out.println("To win you need 3 tokens in a line.\n" +
+                        "Set another win rule? y/n");
+                String command = sc.nextLine();
+                if (command.equalsIgnoreCase("y")) {
+                    System.out.println("Input the amount of tokens to win. Must be >= " + minDotsToWin + " AND <= "
+                            + Math.min(mapWidth, mapHeight));
+                    dotsToWin = sc.nextInt();
+                    sc.nextLine();
 
-        while (true) {
-            playerTurn();
-            System.out.println();
+                }
+                if (dotsToWin >= minDotsToWin && dotsToWin <= Math.min(mapWidth, mapHeight)) {
+                    isWinAmountSet = true;
+                } else {
+                    dotsToWin = minDotsToWin;
+                    System.out.println("Wrong win rule.");
+                }
+            }
+            initMap();
             printMap();
-            if (checkWin(DOT_PLAYER)) {
-                System.out.println(USER_WON_MESSAGE);
-                System.out.println(SAD_ROBOT);
-                break;
+            botLogic = new BotLogic(map, DOT_EMPTY, DOT_BOT, DOT_PLAYER, dotsToWin);
+
+            while (true) {
+                playerTurn();
+                System.out.println();
+                printMap();
+                if (botLogic.checkWin(map, DOT_PLAYER)) {
+                    System.out.println(USER_WON_MESSAGE);
+                    System.out.println(SAD_ROBOT);
+                    break;
+                }
+                if (isMapFull()) {
+                    System.out.println(DRAW_GAME_MESSAGE);
+                    break;
+                }
+                aiTurn();
+                if (botLogic.checkWin(map, DOT_BOT)) {
+                    printMap();
+                    System.out.println(ROBOT_WON_MESSAGE);
+                    System.out.println(HAPPY_ROBOT);
+                    break;
+                }
+                System.out.println();
+                printMap();
+                if (isMapFull()) {
+                    System.out.println(DRAW_GAME_MESSAGE);
+                    break;
+                }
             }
-            if (isMapFull()) {
-                System.out.println(DRAW_GAME_MESSAGE);
-                break;
-            }
-            aiTurn();
-            if (checkWin(DOT_BOT)) {
-                System.out.println(ROBOT_WON_MESSAGE);
-                System.out.println(HAPPY_ROBOT);
-                break;
-            }
-            System.out.println();
-            printMap();
-            if (isMapFull()) {
-                System.out.println(DRAW_GAME_MESSAGE);
-                break;
-            }
+            System.out.println("Play again? y/n");
+            if (!"y".equalsIgnoreCase(sc.nextLine()))
+                playAgain = false;
         }
     }
 }

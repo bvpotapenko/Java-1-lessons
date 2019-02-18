@@ -10,12 +10,10 @@ import org.junit.jupiter.api.Test;
  */
 public class NoughtsAndCrossesTest
 {
-    /**
-     * Rigorous Test :-)
-     */
     @Test
     public void shouldAnswerWithTrue()
     {
+        System.out.println(7/2);
         assertTrue( true );
     }
 }
