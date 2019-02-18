@@ -192,12 +192,12 @@ public class BotLogic {
                 }
                 if (!strategy.horizontalLinesOnly) {
                     //Vertical line
-                    String verticallLine = getLine(curPosition, strategy.lineLength, 0, 1);
-                    if (verticallLine != null && verticallLine.matches(strategy.rule)) {
-                        if (setPosition(strategy, verticallLine, 0, 1))
+                    String verticalLine = getLine(curPosition, strategy.lineLength, 0, 1);
+                    if (verticalLine != null && verticalLine.matches(strategy.rule)) {
+                        if (setPosition(strategy, verticalLine, 0, 1))
                             return true;
-                    } else if (verticallLine != null && strategy.checkReverseString && checkReversed(verticallLine, strategy)) {
-                        if (serReversedPosition(strategy, verticallLine, 0, 1))
+                    } else if (verticalLine != null && strategy.checkReverseString && checkReversed(verticalLine, strategy)) {
+                        if (serReversedPosition(strategy, verticalLine, 0, 1))
                             return true;
                     }
                 }
@@ -309,6 +309,7 @@ public class BotLogic {
     }
 
     public boolean checkWin(char[][] map, char dot) {
+        updateMap(map);
         String winRule = "^[" + dot + "]+$";
         Strategy s = new Strategy(winRule, dotsToWin, 1);
         s.setUseDotPosition(true);

@@ -53,20 +53,19 @@ public class NoughtsAndCrosses {
 
     static void printMap() {
         StringBuilder sb = new StringBuilder();
-        sb = new StringBuilder();
         sb.append("+----");
         for (int k = 0; k < mapWidth; k++) {
             sb.append("+---");
         }
-        sb.append("+%n");
+        sb.append("+");
         String rowSeparator = sb.toString();
-        System.out.printf(rowSeparator);
+        System.out.println(rowSeparator);
         System.out.print("|    |");
         for (int k = 1; k < mapWidth + 1; k++) {
             System.out.print(MessageFormat.format(" {0} |", k));
         }
         System.out.println(" (X-axis)");
-        System.out.printf(rowSeparator);
+        System.out.println(rowSeparator);
         for (int i = 0; i < mapHeight; i++) {
             //System.out.print(MessageFormat.format("| {0} ", i + 1));
             System.out.printf("| %2d ", i + 1);
@@ -78,14 +77,14 @@ public class NoughtsAndCrosses {
                 }
             }
             System.out.println();
-            System.out.printf(rowSeparator);
+            System.out.println(rowSeparator);
         }
         System.out.println("(Y-axis)");
     }
 
     private static void playerTurn() {
-        int x = -1;
-        int y = -1;
+        int x;
+        int y;
         do {
             System.out.println(INPUT_COORDINATES_MESSAGE);
             x = sc.nextInt() - 1;
