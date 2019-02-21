@@ -15,7 +15,7 @@ public class Main {
                 "Engineer",
                 "ivivan@mailbox.com",
                 "892312312",
-                30,
+                60,
                 new BigDecimal(430000) );
         persArray[2] = new Employee("F asd Ivan",
                 "Engineer",
@@ -27,7 +27,7 @@ public class Main {
                 "Engineer",
                 "ivivan@mailbox.com",
                 "892312312",
-                30,
+                41,
                 new BigDecimal(330000) );
         persArray[4] = new Employee("Iv v Ivan",
                 "Engineer",
@@ -36,6 +36,8 @@ public class Main {
                 30,
                 new BigDecimal(303000) );
         for(Employee e: persArray){
+            if(e == null) break;
+            if(e.age > 40)
             System.out.println(e);
         }
     }
